@@ -250,7 +250,7 @@
       return;
     }
     if (k === ']') {
-      BUFFER_TARGETS = Math.min(30, BUFFER_TARGET_S + 2);
+      BUFFER_TARGET_S = Math.min(30, BUFFER_TARGET_S + 2);
       flash(`Buffer target: ${BUFFER_TARGET_S}s`);
       return;
     }
