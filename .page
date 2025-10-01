@@ -1,0 +1,24 @@
+# Contribution Roadmap & PR Guide
+
+## Planned Enhancements
+
+- Upgrade Electron base for Min to latest stable.
+- Overhaul UI: streamline panels, add new banner/bubble/volume manager.
+- Expand extension points for userscripts and site adapters.
+- Refactor diagnostics/dev menu for easier access and extensibility.
+- Security: reinforce context isolation and sandbox defaults.
+
+## How to Contribute
+
+1. Fork the repo, clone, and create a new branch for your feature.
+2. Add or modify userscripts/adapters as needed.
+3. Document your changes in the relevant README and `.page`.
+4. Open a PR describing your improvement, referencing planned enhancements where relevant.
+5. Collaborate via code review and discussion.
+
+## Best Practices
+
+- Always test userscripts on multiple video sites.
+- Document new UI panels or features.
+- Keep performance and security in mind—minimize risk!
+- Use the site adapter template for new video site logic.
