@@ -1,1 +1,1 @@
-# named-min-browser-enhancement-suite
+# min-browser-enhancement-suite
