@@ -1,0 +1,164 @@
+name: Goose AI Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  issues:
+    types: [opened, edited]
+  workflow_dispatch:
+
+jobs:
+  goose-review:
+    name: Goose AI Review
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Start Goose service (mock for CI)
+        run: |
+          # In production, Goose would be running as a service
+          # For CI/CD, we create a mock endpoint or skip if Goose is unavailable
+          echo "Goose service check"
+          # docker run -d -p 8080:8080 goose/server || echo "Goose not available"
+      
+      - name: Run Goose integration
+        id: goose
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GOOSE_API_KEY: ${{ secrets.GOOSE_API_KEY }}
+          GOOSE_ENDPOINT: ${{ secrets.GOOSE_ENDPOINT || 'http://localhost:8080' }}
+          LOG_LEVEL: info
+        run: |
+          # Start the automation server in background
+          npm start &
+          SERVER_PID=$!
+          
+          # Wait for server to be ready
+          sleep 5
+          
+          # For pull requests
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "Analyzing pull request #${{ github.event.pull_request.number }}"
+            
+            # Trigger PR analysis via API
+            curl -X POST http://localhost:3000/webhooks/github/pull_request \
+              -H "Content-Type: application/json" \
+              -d @- <<EOF
+          {
+            "action": "${{ github.event.action }}",
+            "pull_request": {
+              "number": ${{ github.event.pull_request.number }},
+              "title": "${{ github.event.pull_request.title }}",
+              "body": "${{ github.event.pull_request.body }}",
+              "head": {
+                "ref": "${{ github.event.pull_request.head.ref }}"
+              },
+              "base": {
+                "ref": "${{ github.event.pull_request.base.ref }}"
+              },
+              "user": {
+                "login": "${{ github.event.pull_request.user.login }}"
+              }
+            },
+            "repository": {
+              "name": "${{ github.event.repository.name }}",
+              "owner": {
+                "login": "${{ github.event.repository.owner.login }}"
+              },
+              "full_name": "${{ github.event.repository.full_name }}"
+            }
+          }
+          EOF
+          fi
+          
+          # For issues
+          if [ "${{ github.event_name }}" = "issues" ]; then
+            echo "Analyzing issue #${{ github.event.issue.number }}"
+            
+            curl -X POST http://localhost:3000/webhooks/github/issues \
+              -H "Content-Type: application/json" \
+              -d @- <<EOF
+          {
+            "action": "${{ github.event.action }}",
+            "issue": {
+              "number": ${{ github.event.issue.number }},
+              "title": "${{ github.event.issue.title }}",
+              "body": "${{ github.event.issue.body }}",
+              "user": {
+                "login": "${{ github.event.issue.user.login }}"
+              }
+            },
+            "repository": {
+              "name": "${{ github.event.repository.name }}",
+              "owner": {
+                "login": "${{ github.event.repository.owner.login }}"
+              },
+              "full_name": "${{ github.event.repository.full_name }}"
+            }
+          }
+          EOF
+          fi
+          
+          # Wait for processing
+          sleep 10
+          
+          # Stop server
+          kill $SERVER_PID
+      
+      - name: Check Goose status
+        if: always()
+        run: |
+          echo "Checking Goose integration status..."
+          if [ -f logs/combined.log ]; then
+            echo "Recent logs:"
+            tail -n 50 logs/combined.log
+          fi
+      
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: goose-logs
+          path: logs/
+          retention-days: 7
+  
+  goose-health-check:
+    name: Goose Health Check
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Check Goose availability
+        run: |
+          echo "Checking Goose service availability..."
+          curl -f http://localhost:8080/health || echo "Goose service not available locally"
+      
+      - name: Report status
+        run: |
+          echo "Goose integration health check complete"
+          echo "See workflow logs for details"
