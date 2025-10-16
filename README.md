@@ -79,6 +79,7 @@ Copy the following files into your Min Browser userscripts directory (by default
 
 - `gpt-copy-14.js` – Min Optimizer + Overlay
 - `auto-inwindow-fullscreen-quality-lock.js` – Auto In-Window Fullscreen + Overlay Play + Quality Lock
+- `site-adapters/PerplexityAdapter.js` – Perplexity.ai Space Access (optional, for Perplexity users)
 
 ### 2. Advanced Launch Command
 
@@ -103,6 +104,17 @@ env MIN_USER_SCRIPTS="/Users/vivek/Library/Application Support/Min/userscripts/"
 - Clicks overlay and player controls for seamless in-window fullscreen.
 - Locks highest available video quality, auto-reapplies as needed.
 - Escape exits fullscreen, with automatic re-entry.
+
+### **Site Adapters**
+
+#### **PerplexityAdapter.js** – Perplexity.ai Space Access
+
+- Tracks and provides quick access to recently edited spaces on Perplexity.ai
+- Floating button with space history (up to 10 most recent spaces)
+- Shows space names, access count, and time since last visit
+- One-click navigation to any previously visited space
+- Visual menu with recently accessed spaces highlighted
+- Configurable auto-navigation and notifications
 
 ---
 
