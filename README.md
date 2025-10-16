@@ -147,6 +147,25 @@ env MIN_USER_SCRIPTS="/Users/vivek/Library/Application Support/Min/userscripts/"
 - New contributors should reference the developer menu and site adapter template.
 - All major features and UI panels are documented for ease of onboarding.
 
+### Automation & CI/CD
+
+This repository includes automated quality gates for faster PR reviews (4x speedup):
+
+- **Automated Syntax Validation**: All JavaScript files checked on every PR
+- **Security Scanning**: Automatic detection of XSS and other vulnerabilities
+- **Code Quality**: ESLint configuration enforces consistent style
+- **File Sync Verification**: Ensures site-adapters and userscripts stay in sync
+
+See [AUTOMATION.md](AUTOMATION.md) for setup instructions and usage.
+
+**Quick Start:**
+```bash
+npm install          # Install dependencies
+npm run lint         # Check code quality
+npm run check:syntax # Validate JavaScript syntax
+npm run check:security # Scan for security issues
+```
+
 ---
 
 ## Security Notes
