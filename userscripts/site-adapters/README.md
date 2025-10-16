@@ -29,6 +29,7 @@ This directory contains templates and example adapters for extending Min Browser
 | Adapter Name         | Target Site                      | Features/Notes               |
 |----------------------|----------------------------------|------------------------------|
 | ExampleAdapter.js    | example.com                      | Demo for custom controls     |
+| PerplexityAdapter.js | perplexity.ai                    | Quick access to recently edited spaces, space history tracking, visual menu |
 | ...                  | ...                              | ...                          |
 
 Contribute your adapters by opening a PR and documenting here!
