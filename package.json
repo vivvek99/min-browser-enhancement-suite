@@ -18,8 +18,11 @@
     "docker:run": "docker run -p 3000:3000 github-automation",
     "agents:thinking": "node src/agents/thinking-agent.js",
     "agents:action": "node src/agents/action-agent.js",
+    "agents:goose": "node src/agents/goose-agent.js",
     "integrations:qodo": "node src/integrations/qodo-integration.js",
     "integrations:copilot": "node src/integrations/copilot-enhancer.js",
+    "integrations:goose": "node src/integrations/goose-integration.js",
+    "workflows:goose": "node src/workflows/goose-github-workflow.js",
     "browser:automation": "node src/browser-automation/github-ui-automation.js",
     "setup:env": "node scripts/setup-environment.js",
     "health:check": "node scripts/health-check.js"
