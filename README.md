@@ -1,5 +1,7 @@
 # Min Browser Enhancement Suite
 
+> **📋 PR #8 Analysis Available**: See [TASK_SUMMARY.md](TASK_SUMMARY.md), [PR8_ANALYSIS.md](PR8_ANALYSIS.md), and [MERGE_PR8_GUIDE.md](MERGE_PR8_GUIDE.md) for complete analysis of the Perplexity Space Access Adapter PR.
+
 ## Overview
 
 This repository delivers a robust enhancement suite for [Min Browser](https://minbrowser.org/), focused on video performance, user experience, and developer diagnostics. It integrates advanced userscripts, optimal GPU/video launch configuration, and a clear developer/contributor workflow.
