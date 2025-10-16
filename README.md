@@ -135,6 +135,30 @@ env MIN_USER_SCRIPTS="/Users/vivek/Library/Application Support/Min/userscripts/"
 - New contributors should reference the developer menu and site adapter template.
 - All major features and UI panels are documented for ease of onboarding.
 
+### Development Commands
+
+This repository uses npm for development tooling:
+
+```sh
+# Install dependencies (ESLint, Prettier, etc.)
+npm install
+
+# Lint all JavaScript files
+npm run lint
+
+# Auto-fix linting issues
+npm run lint:fix
+
+# Format all JS and MD files
+npm run format
+
+# Check formatting without making changes
+npm run format:check
+
+# Run both lint and format check
+npm run validate
+```
+
 ---
 
 ## Security Notes
