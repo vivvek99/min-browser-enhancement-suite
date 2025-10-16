@@ -117,10 +117,6 @@
     "cross-env": "^7.0.3",
     "rimraf": "^5.0.5"
   },
-  "peerDependencies": {
-    "docker": ">=20.0.0",
-    "kubernetes": ">=1.25.0"
-  },
   "optionalDependencies": {
     "sharp": "^0.32.6",
     "canvas": "^2.11.2"
