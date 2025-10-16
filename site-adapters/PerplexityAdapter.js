@@ -367,6 +367,16 @@
     }
   }
 
+  // Sanitize HTML to prevent XSS attacks
+  function escapeHtml(unsafe) {
+    return unsafe
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
   // Update the space list in the menu
   function updateSpaceList() {
     const listElem = document.getElementById('pplx-space-list');
@@ -385,11 +395,13 @@
       const date = new Date(space.lastAccessed);
       const timeAgo = getTimeAgo(space.lastAccessed);
       const isRecent = index === 0;
+      const safeName = escapeHtml(space.name);
+      const safeUrl = escapeHtml(space.url);
       
       return `
-        <div class="pplx-space-item ${isRecent ? 'pplx-space-recent' : ''}" data-space-url="${space.url}">
+        <div class="pplx-space-item ${isRecent ? 'pplx-space-recent' : ''}" data-space-url="${safeUrl}">
           <div class="pplx-space-name">
-            ${isRecent ? '⭐ ' : ''}${space.name}
+            ${isRecent ? '⭐ ' : ''}${safeName}
           </div>
           <div class="pplx-space-meta">
             ${timeAgo} • Visited ${space.accessCount} time${space.accessCount !== 1 ? 's' : ''}

@@ -1,0 +1,99 @@
+name: PR Validation
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  syntax-check:
+    name: JavaScript Syntax Validation
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+        
+    - name: Check JavaScript syntax
+      run: |
+        echo "Checking JavaScript files for syntax errors..."
+        for file in $(find . -name "*.js" -not -path "*/node_modules/*" -not -path "*/.git/*"); do
+          echo "Checking: $file"
+          node --check "$file"
+        done
+        echo "✅ All JavaScript files have valid syntax"
+        
+    - name: Check for security issues
+      run: |
+        echo "Checking for common security issues..."
+        # Check for eval usage
+        if grep -r "eval(" --include="*.js" --exclude-dir=node_modules .; then
+          echo "⚠️ Warning: eval() usage found"
+        fi
+        # Check for dangerous innerHTML without sanitization
+        if grep -r "innerHTML.*\${" --include="*.js" --exclude-dir=node_modules .; then
+          echo "ℹ️ Note: Template literals in innerHTML detected - ensure proper sanitization"
+        fi
+        echo "✅ Security check complete"
+
+  documentation-check:
+    name: Documentation Validation
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Check documentation exists
+      run: |
+        echo "Checking documentation files..."
+        if [ -f "README.md" ]; then
+          echo "✅ README.md exists"
+        else
+          echo "❌ README.md missing"
+          exit 1
+        fi
+        
+    - name: Check for TODO/FIXME comments
+      run: |
+        echo "Checking for unfinished work..."
+        if grep -r "TODO\|FIXME" --include="*.js" --include="*.md" --exclude-dir=node_modules .; then
+          echo "ℹ️ Note: Found TODO/FIXME comments"
+        else
+          echo "✅ No TODO/FIXME comments found"
+        fi
+
+  file-structure-check:
+    name: File Structure Validation
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Verify mirrored files
+      run: |
+        echo "Checking for file synchronization..."
+        # Check if site-adapters and userscripts are in sync
+        if [ -d "site-adapters" ] && [ -d "userscripts/site-adapters" ]; then
+          echo "✅ Both directories exist"
+          
+          # Compare file lists
+          site_files=$(find site-adapters -type f -name "*.js" | sort)
+          user_files=$(find userscripts/site-adapters -type f -name "*.js" | sort)
+          
+          for file in $site_files; do
+            basename_file=$(basename "$file")
+            if [ -f "userscripts/$file" ]; then
+              echo "✅ $basename_file is mirrored"
+            else
+              echo "⚠️ $basename_file not found in userscripts"
+            fi
+          done
+        fi

@@ -1,0 +1,31 @@
+{
+  "name": "min-browser-enhancement-suite",
+  "version": "1.0.0",
+  "description": "Enhancement suite for Min Browser with userscripts and site adapters",
+  "scripts": {
+    "lint": "eslint . --ext .js",
+    "lint:fix": "eslint . --ext .js --fix",
+    "check:syntax": "node scripts/check-syntax.js",
+    "check:security": "node scripts/check-security.js",
+    "test": "node scripts/run-tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vivvek99/min-browser-enhancement-suite.git"
+  },
+  "keywords": [
+    "min-browser",
+    "userscripts",
+    "browser-extension",
+    "perplexity",
+    "video-optimization"
+  ],
+  "author": "vivvek99",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.50.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
