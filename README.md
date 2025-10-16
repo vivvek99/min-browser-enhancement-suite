@@ -4,6 +4,8 @@
 
 This repository delivers a robust enhancement suite for [Min Browser](https://minbrowser.org/), focused on video performance, user experience, and developer diagnostics. It integrates advanced userscripts, optimal GPU/video launch configuration, and a clear developer/contributor workflow.
 
+Additionally, it includes a sophisticated **Multi-Agent GitHub Automation System** with **Goose AI Integration** for intelligent code review, generation, and analysis.
+
 ---
 
 ## Table of Contents
@@ -11,6 +13,8 @@ This repository delivers a robust enhancement suite for [Min Browser](https://mi
 - [Features](#features)
 - [Installation](#installation)
 - [Userscripts](#userscripts)
+- [Multi-Agent GitHub Automation](#multi-agent-github-automation)
+- [Goose AI Integration](#goose-ai-integration)
 - [Advanced Launch Command](#advanced-launch-command)
 - [UI Components](#ui-components)
 - [Developer Tools & Benchmarking](#developer-tools--benchmarking)
@@ -67,6 +71,67 @@ This repository delivers a robust enhancement suite for [Min Browser](https://mi
 ### Customization
 
 - **Site Adapter Template**: Easily extend the enhancement suite to new sites using the provided template.
+
+---
+
+## Multi-Agent GitHub Automation
+
+A sophisticated multi-agent system for GitHub automation, supporting parallel AI workflows for code analysis, automated reviews, PR management, and seamless integration with developer tools.
+
+### Key Components
+
+- **Agent Framework**: Modular design for easy integration of AI agents
+- **Workflow Engine**: Automated processing of GitHub events (PRs, issues, pushes)
+- **Integration Layer**: Connect with various AI services and tools
+
+See [ARCHITECTURE.md](ARCHITECTURE.md) for detailed architecture documentation.
+
+---
+
+## Goose AI Integration
+
+[Goose](https://github.com/block/goose) is an AI-powered coding agent developed by Block that brings intelligent automation to your GitHub workflows.
+
+### Features
+
+- **Automated Code Review**: Analyze pull requests and provide intelligent feedback
+- **Code Generation**: Generate code from natural language descriptions
+- **Bug Detection**: Identify potential bugs and security issues
+- **Test Generation**: Create comprehensive test suites automatically
+- **Documentation**: Generate high-quality code documentation
+- **Refactoring**: Suggest and implement code improvements
+
+### Quick Start
+
+1. Install dependencies:
+```bash
+npm install
+```
+
+2. Configure environment:
+```bash
+cp .env.example .env
+# Edit .env with your API keys and configuration
+```
+
+3. Start the server:
+```bash
+npm start
+```
+
+### API Endpoints
+
+- `GET /health` - Health check
+- `GET /api/agents/goose/status` - Get Goose agent status
+- `POST /api/goose/analyze` - Analyze code
+- `POST /api/goose/generate` - Generate code
+- `POST /api/goose/review` - Review code
+
+### Documentation
+
+- [Goose Integration Guide](docs/GOOSE_INTEGRATION.md)
+- [Integration README](src/integrations/README.md)
+- [Architecture Documentation](ARCHITECTURE.md)
 
 ---
 
